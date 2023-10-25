@@ -1,0 +1,276 @@
+* *file:* te dice el tipo de archivo que es.
+** *file \*:*
+** *file archivo.txt:* 
+
+___
+
+== Cambiar fecha a un archivo
+
+* *ls -l colores.txt:* puedes ver por ahí la fecha.
+* *touch colores.txt:* haces un touch al fichero que ya existe.
+* *ls -l colotes.txt:* ahora la fecha es otra.
+
+*touch -c colores.txt:* así es mejor cambiar la fecha, porque como no exista el archivo y no le pongas el -c, te lo crea; en caso de que no exista, con el -c no crea nada.
+
+* *touch -t 12311200 colores.txt:* cambias la fecha al archivo, el formato de la fecha es mmddhhmm -mes, día, hora, minuto-). Se puede añadir año al principio (touch -t 2004011200 colores.txt pondría el año 2020 -solo se pone el 20-), sino asume que es el actual; si no pones hora suele poner las 12pm.
+
+* *touch -r color.txt colores.txt:* la -r es de referencia, color.txt es el archivo al que hace esa referencia, y colores.txt el archivo al que va dirigido; así, la fecha y hora del archivo color.txt será también ahora la fecha de colores.txt.
+
+___
+
+
+== Enlaces
+
+Tenemos dos tipos de enlaces:
+
+=== Simbólicos
+
+Lo que en Windows son los accesos directos; acceso directo a un fichero o a un directorio. Trabajan sobre.
+    - Ficheros
+    - Directorios
+
+[source,bash]
+----
+ln -s facturacion/compras/c_2020/ enlace_c_2020
+----
+
+Primero se pone la ruta donde va a dirigir el link, y después el nombre que queramos.
+
+Ahora cuando quiera cambiar a ese directorio, usaremos cd con el enlace:
+
+[source, bash]
+----
+cd enlace_c_2020
+----
+
+Y al hacer *pwd* veremos que nos ha llevado a la ruta del enlace.
+
+Si queremos borrar los archivos que hay en esa ubiucación.
+
+[source, bash]
+----
+rm enlace_c_2020/*
+----
+
+Y nos eliminará todos los archivos, pero nos dejará el accesos directo, solo que ahora es inservible.
+
+Si además eliminas el directorio de la ruta, cuando haces un ls -l el enlace aparece en rojo y negro, porque es inservible; por eso habrá que eliminar el enlace.
+
+[source, bash]
+----
+rm enlace_c_2020/
+----
+
+Se elimina normal porque para Linux es un fichero más.
+
+
+=== hard link 
+
+Solo trabajan sobre *FICHEROS*.
+
+[source, bash]
+----
+ls -id *
+----
+
+El -i es de inodo (y la -d de directorio), es como el DNI de una entrada, un número que no se repite. Si sacamos cada inodo de cada entrada. No es solo un número, contiene una serie de información donde guarda ese número de inodo, el nombre del fichero o directorio, el tipo, cuándo fue creado, por quién. cuando se modificó por última vez, cuándo se accedió por última vez en solo lectura...
+
+En el caso de los enlaces duros, los enlaces se repiten, es la única excepción que tenemos, el inodo es por esencia irrepetible.
+
+En Windows esto no existe.
+
+La idea es la siguiente, crear un fichero y todo el mundo accediendo a él, y modificando. Si uno lo modifica, entra la modificación a todos. Todos ven las modificaciones, porque el fichero es uno, aunque tengamos cada uno el fichero en su propia carpeta personal.
+
+* *ls -lih:* vas a ver los números de inodos y los KB que ocupan.
+
+Para crear un enlace duro:
+
+[source, bash]
+----
+ln /home/asir1/colores.txt colores.txt
+----
+
+El fichero está en el sistema una sola vez, no repetido tantas veces como ln se hagan. 
+
+___
+
+* *wc:* nos da los datos del fichero datos.txt
+
+** *wc -l datos.txt:* cuenta las líneas que tiene el fichero datos.txt.
+
+** *wc -w datos.txt:* cuenta las palabras del fichero datos.txt; solo cuenta las palabras por espacio, es decir, si tenemos maria:blanco:negreira:1500 solo lo toma como una palabra.
+
+** *wc -c datos.txt:* cuenta los caracteres del fichero datos.txt.
+
+** **wc -L datos.txt:* nos dice cuál es la línea más larga del fichero datos.txt.
+
+[NOTE]
+Estos parámetros se pueden combinar, por ejemplo, si quiero saber el número de caracteres que tiene la línea más larga usaría *wc -L -c datos.txt*.
+
+* *ls / | wc:* 
+
+* *ls / | wc -l:*
+
+Dos métodos para ver el número de líneas de un fichero:
+
+* Como comando: *wc -l reporte.txt*
+
+* Como filtro: *cat reporte.txt | wc -l*
+
+Ambas hacen exactamente lo mismo.
+
+Y si uso el tac para que las cuente al revés lo mismo, da igual que las cuente de un lado o de otro que son las mismas.
+
+* *wc -l reporte.txt datos.txt:* me cuenta las líneas de los dos ficheros y además me hace la suma.
+
+- wc -lc /etc/:
+
+- wc -lc /etc/* 2>/dev/null:
+
+- wc -lc /etc/* 2>/dev/null | less:
+
+- wc -lc /etc/* 2>/dev/null | more:
+
+
+___
+
+== Unir varios ficheros
+
+Tengo dos ficheros: datos.txt y reporte:
+
+* *cat datos.txt reporte >> reporte.datos:* se añade el segundo debajo del primero en un nuevo fichero llamado reporte.datos. El orden en el que se escriben los ficheros es importante.
+
+* *cat dichos_3.txt > dichos.txt:* así unes el fichero dichos_3.txt con el ficheros dichos.txt; queda el fichero dichos.txt con su contenido original y al final se le ha añadido el contenido del fichero dichos.3.txt.
+
+___
+
+* *cat -n reporte.datos:* enumera cada una de las filas, es solo visual y no modifica el fichero.
+
+* *head -5 reporte.datos:* quiero ver, desde el top (head, cabecera) las cinco primeras líneas, se puede poner cualquier número, empieza desde la cabecera y va cogiendo las cinco primeras líneas. Si no pongo ningún parámetro va a mostrar 10 líneas.
+
+[NOTE]
+---
+El head funciona como comando y como filtro: cat reporte.datos | head -3
+---
+
+* *tail -2 reporte.datos:* funciona al revés que el head, desde abajo. Muestra también 10 por defecto si no le indicas parámetro.
+
+
+* *cat -n reporte.datos | head -5 | head -2:* si queremos que solo nos muestre las líneas 4 y 5, le pedimos dos filtros a la vez: el del head nos muestra hasta la línea 5, y ahora el tail nos muestra solo la 5 y la 4 que son las dos primeras desde abajo.
+
+* *tail +4 reporte.datos:* en vez de poner un - pongo el + para decirle que se posicione en la línea 4; va a mostrar desde línea 4; hace lo mismo como filtro *cat -n reporte.datos | tail +4*; si además se le añade un filtro head -2 te coge las dos primeras líneas de las que filtró. Quedaría *cat -n reporte.datos | tail +4 | head -2* 
+
+* head -1 * : te muestra la primera línea de todos los ficheros que hay en el directorio actual. Puede usarse cualquier comodín, por ejemplo, head -1 rep*; con los directorios dará error, así que se le puede añadir esto: head -1 * 2>/dev/null
+
+
+___
+
+Lo normal en Linux para separar campos son los dos puntos:
+
+maria:blanco:negreira:1500
+
+Si tengo un fichero con varios registros como el anterior, y quisiera guardar en otro fichero todos los nombres de la primera columna (maria en el registro de ejemplo), usaríamos el comando _cut_ para cortar la columna.
+
+* *cut -d: -f1 datos.txt > usuarios.txt:* la -d es el delimitador, donde va a cortar, en este caso le indicamos que un campo termina con los dos puntos; la -f es de field, campo, y le decimos que queremos que saque el primer campo (maria). 
+
+** *cut -d: -f2 datos.txt | tee colorin.txt:* aquí usamos el tee; el -f2 solo coge el campo 2 eh, no el 1 y el 2.
+
+* *cut -d: -f1,4 datos.txt:* así es solo visual, no lo estamos guardando en ningún sitio, lo que si en el parámetro -f le estamos diciendo que queremos dos campos, el 1 y el 4.
+
+* *cut -d: -f1-3 datos.txt:* con el guión en vez de la coma, lo que indicas es un rango, coges de la columna 1 a la 3.
+
+cut también funciona como filtro:
+
+* *ls -l | cut -d " " -f1:* aquí le pido un listado largo, y le filtro con el delimitador espacio y columna 1. Ojo con dejar espacio entre la d y la comilla de apertura, no pegarlos nunca. (En este caso va a pasar una cosa no deseada, y es que algunas columnas del listado tienen dos espacios de separación entre ellas, por ejemplo cuando en una columna hay números, algunos son de 3 cifras y otros de 2, por lo que los de 2 tienen un espacio en blanco de más, y cuenta otra columna de más).
+
+
+* *ls -l | tee nombre.fichero:* muestra el ls por pantalla y a la vez lo guarda en el archivo nombre.fichero.
+
+___
+
+* sort datos.txt: ordena el fichero, sin ningún parámetro simplemente toma el primera caracter de cada registro y lo ordena.
+
+** sort -t: -k2 datos.txt: aquí la -t es el delimitador, entonces le estamos diciendo que los dos puntos son el delimitador, la -k es de clave, queremos la segunda clave (el segundo campo); entonces ordena en función de la segunda columna.
+
+** sort -t: -k4 -n datos.txt: para ordenar por campos numéricos, lo que haría normalmente es ordenar por primer caracter, y tomaría primero el 1100 antes que un 990, por el 1 y el 9. Por eso hay que añadir el -n de numérico.
+
+** sort-t: -k4 -nr datos.txt: la -r es de reverse, lo ordenará de mayor a menor.
+
+sort puede actuar como filtro:
+cut -d: -f3 datos.txt | sort
+
+** cut -d: -f3 datos.txt | sort | uniq: así no habrá datos repetidos.
+** cut -d: -f3 datos.txt | sort | uniq -u: con -u nos muestra solo datos que no se repiten.
+** cut -d: -f3 datos.txt | sort | uniq -c: cuenta cuántas veces se repite cada resultado.
+
+[NOTE]
+Siempre que usemos _unique_ es importante usar el _sort_ antes, porque lo que está comparando el _unique_ es la fila de arriba con la de abajo, y si no están ordenados, va a mostrar repetidos:
+ames
+ames
+ames
+negreira
+santiago
+santiago
+Así compararía santiago con santiago y ames con ames con ames. Si no está ordenado no los compara.
+
+
+----
+* cut -d: -f3 datos.txt | sort | uniq -c | cut -d " " -f2: así no nos muestra la columna que queremos porque hay varios espacion antes y toma más columnas de las que queremos.
+
+* cut -d: -f3 datos.txt | sort | uniq -c | cut -d " " -f8: así sí, porque está en la columna 8 realemnte con lo de los espacios.
+
+* cut -d: -f3 datos.txt | sort | uniq -c | cut -c 9-20: así le pedimos que coja a partir del carácter 8 y coja hasta el 20, en vez de usar delimitadores. 
+
+* cut -d: -f3 datos.txt | sort | uniq -c | cut -c 9-20 | tee ciudades.txt: así además lo guardamos en un fichero ciudades.txt.
+----
+
+ls -l | cut -d " " -f3 | tail +2 | sort | uniq -c | tee usuarios2.txt: me sale cuántos usuarios diferentes hay en el listado y cuántas veces se repiten.
+
+___
+
+cut -d: -f1 datos.txt > estado.civil
+
+
+paste -d: datos.2.txt estado.civil | tee datos.3.txt: si no lo guardas, el paste es solo visual. Para usar el paste lo mejor es crear un archivo temp antes con lo que queremos pegar.
+
+
+cut -d: -f4 datos.3.txt | sort -n -r | head -1
+cut -d: -f4 datos.3.txt | sort -n | tail -1
+
+Ambos comandos nos devolverían lo mismo, en uno usamos reversa y otro no, así que filtramos el primero por el principio o por el final dependiendo.
+
+cut -d: -f4 datos.3.txt |
+
+[NOTE]
+_cut_ trabaja como comando y como filtro.
+
+cut -d: -f5 datos.3.txt | sort | uniq -c | head -2 | tail -1
+
+
+tr [A-Z] [a-z] < datos3.txt > datos.min.txt: tr es un traductor; todo lo que está en mayúsculas lo ponga en minúsculas. Necesita obligatoriamente un redireccionamiento de ENTRADA (<); 
+
+tr ":" "*" < datos.3.txt: que cambie todos los : a *. Aquí es solo visualmente el cambio.
+
+tr [A-Z] [a-z] < datos.3.txt | tr ":" "*": doble traducción, no hace falta poner otra vez el archivo.
+
+
+también funciona como filtro:
+
+cat datos.3.txt | tr [A-Z] X: que todas las mayúsculas las cambie por una X.
+
+cat | tr -d [A-Z]: el -d es de delte, y borrará todos los caractéres que estén en mayúscula.
+
+[NOTE]
+El archivo de entrada y salida no puede ser el mismo, porque entonces habría un bucle ahí que no funcionaría, queda el archivo en blanco.
+
+___
+
+ls -l | tr -d ' ' | cut -d ' ' -f6: aquí al quitar los espacios nos queda solo una columna.
+
+ls -l | tr -s ' ' | cut -d ' ' -f6: aquí el -s nos quita solo los espacios repetidos, que es lo que necesitamos justo para esto.
+
+___
+
+ls -l | tr -s ' ' | cut -d ' ' -f6 | sort | uniq -c: aquí no s diría cada mes y cuántos salen por cada mes.
+
+tr -c [a-z] " " < prueba: el -c es de contrario, va a reemplazar todo lo que no sea minúsculas de la a-z por un espacio en blanco. Lo contrario no son solo las mayúsculas, también números, signos de puntuación... cualquier caracter que no esté entre a-z.
