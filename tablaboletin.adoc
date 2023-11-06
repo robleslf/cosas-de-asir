@@ -1,0 +1,9 @@
+[cols="^,^,^,^,^,^"]
+|===
+|Categoría | Taxa de Transferência (Mbps) | Tipo de Cabo | Tipo de Conector | Onde se Utiliza | Preço por Metro
+|Cat 5 | 100 | UTP | RJ-45 | Redes Ethernet | [Preço por Metro]
+|Cat 5e | 1000 | UTP | RJ-45 | Redes Ethernet Gigabit | [Preço por Metro]
+|Cat 6 | 1000 | UTP | RJ-45 | Redes Ethernet Gigabit | [Preço por Metro]
+|Cat 6a | 10,000 | UTP/STP | RJ-45 | Redes Ethernet 10 Gigabit | [Preço por Metro]
+|Cat 7 | 10,000 | STP | GG-45 | Redes Ethernet 10 Gigabit | [Preço por Metro]
+|===
