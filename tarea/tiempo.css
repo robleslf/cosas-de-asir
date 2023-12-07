@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+
+body {
+    background-image: url(assets/imgs/pexels-photo-1261728.jpeg);
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    margin-bottom: 60px;
+
+}
+
+
+@keyframes neonGlow {
+    0% {
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    100% {
+      text-shadow: 4px 4px 8px #00bfff, -4px -4px 8px #ff69b4, 0 0 20px #00bfff, 0 0 30px #ff69b4;
+    }
+  }
+  
+@keyframes pulseBackground {
+    0% {
+      background: #333;
+    }
+    100% {
+      background: #444; 
+    }
+  }
+
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    color: cornsilk;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    animation: neonGlow 1s ease-in-out infinite alternate;
+    text-align: center; 
+  }
+
+
+p {
+  font-family: "Orbitron";
+  font-size: small;
+}
+
+#sprites {
+    background-color: #00bfff;
+    width: 900px;
+    margin: 30px auto;
+    padding: 15px;
+    text-align: center;
+    border-radius: 15px;
+}
+
+
+#sprites ul {
+    display: block;
+    list-style: none;
+    padding: 80px;
+    overflow: hidden;
+    margin: 0 auto;
+    background-color: #ff69b4;
+    max-height: 160px;
+    border-radius: 15px;
+}
+
+#sprites ul li {
+    display: inline-block;
+}
+
+#sprites ul li a {
+    display: block;
+    width: 60px;
+    height: 50px;
+    background: url("assets/imgs/Weather_1.png");
+    float: left;
+    background-color: grey;
+    margin: 4px;
+    border: 2px solid black;
+    transition: all 1s ease;
+}
+
+
+#sprites ul li a.solamarillo {
+    background-position: -13px -22px;
+}
+
+#sprites ul li a.nubesgrises {
+    background-position: -87px -22px;
+}
+
+#sprites ul li a.nieblagris {
+    background-position: -173px 74px;
+}
+
+#sprites ul li a.lluviaazul {
+  background-position: -255px 130px;
+}
+
+#sprites ul li a.ligeraslluvias {
+  background-position: -176px 130px;
+}
+
+#sprites ul li a.ojodansol {
+  background-position: -94px 134px;
+}
+
+#sprites ul li a.vientohuracanado {
+  background-position: -255px 73px;
+}
+
+#sprites ul:hover {
+  background: linear-gradient(135deg, #00bfff, #ff69b4);
+  
+}
+
+#sprites ul li a:hover {
+  transform: rotate(1deg);
+  border-radius: 30px;
+}
+
+hr {
+  border-color: yellow;
+}
+
+p.leyenda {
+  color: snow;
+}
+
+hr.leyenda {
+  border-color: rgb(236, 201, 169);
+}
+
+
+
+#redessociales {
+  width: 100%;
+  padding: 0px;
+  text-align: center;
+  border-radius: 15px;
+  position: fixed;
+  bottom: 0;
+  color: white;
+}
+
+#redessociales ul li {
+  display: inline-block;
+}
+
+#redessociales ul li a {
+  display: block;
+  width: 38px;
+  height: 38px;
+  background: url("assets/imgs/Social.png");
+  float: left;
+  background-color: grey;
+  margin: 4px;
+  border: 2px solid black;
+  transition: all 1s ease;
+  border-radius: 30px;
+}
+
+
+#redessociales ul li a.facebook {
+  background-position: -47px 40px;
+}
+
+#redessociales ul li a.twitter {
+  background-position: -03px 40px;
+}
+
+#redessociales ul li a.instagram {
+  background-position: -91px 40px;
+}
+
+#redessociales ul li a.youtube {
+background-position: -309px 128px;
+}
+
+#redessociales ul li a.googleplus {
+background-position: -180px 128px;
+}
+
+
+#redessociales ul li a.pinterest {
+  background-position: -135px 40px;
+}
+
+
+
+#redessociales ul li a:hover {
+  background-color: black;
+  border: 2px black;
+  transform: rotate(360deg);
+  border-radius: 26px;
+}

@@ -1,0 +1,68 @@
+body {
+    background-image: url(pexels-photo-1261728.jpeg);
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+
+}
+
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    color: cornsilk;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    animation: neonGlow 1s ease-in-out infinite alternate;
+    text-align: center; /* Centrar el texto horizontalmente */
+  }
+
+#sprites {
+    background-color: steelblue;
+    width: 200px;
+    margin: 30px auto;
+    padding: 30px;
+    text-align: center;
+}
+
+#sprites ul {
+    display: block;
+    list-style: none;
+    padding: 0px;
+    overflow: hidden;
+    margin: 0 auto;
+    background-color: orange;
+    max-height: 36px;
+}
+
+#sprites ul li {
+    display: inline-block;
+}
+
+#sprites ul li a {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: url("Weather\ 1.png");
+    float: left;
+    background-color: grey;
+    margin: 4px;
+    border: 2px solid white;
+    transition: all 1s ease;
+}
+
+#sprites ul li a.Facebook {
+    background-position: 0px 0px;
+}
+
+#sprites ul li a.Mail {
+    background-position: -96px 0px;
+}
+
+#sprites ul li a.RSS {
+    background-position: -72px 0px;
+}
+
+#sprites ul li a:hover {
+    background-color: black;
+    border: 2px black;
+    transform: rotate(360deg);
+    border-radius: 26px;
+}
