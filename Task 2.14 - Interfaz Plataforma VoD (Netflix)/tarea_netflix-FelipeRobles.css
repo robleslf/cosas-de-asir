@@ -264,7 +264,32 @@ de móviles (muy pequeños) a dispositvos de escritorio (muy grandes) */
 
 
 
+ /*Small devices (landscape phones, 576px and up)*/
+ @media (mmin-width: 416px) { 
+    .box {
+        flex-basis: 50%;
+    }
 
+    .parent {
+        width: 95%;
+    }
+
+
+    .agitar {
+            display:none
+        }
+    
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        gap: 1.25rem;
+        max-width: 75%;
+        margin: auto;
+    
+    }
+    
+ }
 
  /*Small devices (landscape phones, 576px and up)*/
  @media (max-width: 576px) { 
@@ -281,6 +306,15 @@ de móviles (muy pequeños) a dispositvos de escritorio (muy grandes) */
             display:none
         }
     
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        gap: 1.25rem;
+        max-width: 75%;
+        margin: auto;
+    
+    }
     
  }
 
