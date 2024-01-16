@@ -494,3 +494,16 @@ En el cron sí que se permite el echo, no como en el at
 
 [NOTE]
 Usar siempre rutas absolutas con el cron, porque, por ejemplo, si le dices que tal día a tal hora cree el archivo archivo.txt, como no le pongas la ruta, te lo va a crear donde esté en ese momento
+
+___
+
+Una cosa sobre el cron: 
+
+Cuando haces "crontab -e" abres el fichero de crontab del usuario, pero cuando haces "sudo crontab -e" abres otro archivo, el del superusuario. Son dos archivos diferentes. 
+
+Entonces, cuando quiera poner algún comando que se ejecute y necesite permisos de root, como puede ser "shutdown", no se tiene que hacer "crontab -e" y dentro "sudo shutdown -h now". Porque cuando llegue el momento de ejecutarse el comando, nos pediría la contraseña, y para eso no automatizamos nada.
+
+Lo que hay que hacer es el "sudo crontab -e" y dentro "shutdown -h now".
+
+Y otra cosa, en el archivo crontab del root, hay que poner las rutas absolutas pero del todo, no valdría poner "~/copias.txt", porque eso es el home de usuario pero ahora no somos el usuario. Habría que poner /home/asir/copias.txt
+___ 
