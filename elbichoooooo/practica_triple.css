@@ -1,0 +1,54 @@
+body {
+    display: flex;
+    justify-content: left;
+    background-image: url(https://img.freepik.com/premium-photo/basketball-court_306105-2225.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+
+
+.elbicho {
+    position: absolute;
+    top: 500px;
+    left: 360px;
+    width: 100%;
+    animation: chilena 1s ease-in;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    transform: rotate(45deg);
+}
+
+
+.ball {
+    width: 30px;
+    height: 30px;
+    background-image: url(https://1.bp.blogspot.com/-zIEDPmaPtaA/V2pEwrqCM6I/AAAAAAABkCM/PP-1e214zkkaWRIY9Xs6Gpa8PqEqxo8ZQCLcB/s1600/2004.%2BADIDAS%2BROTEIRO%2BBAL%25C3%2593N%2BOFICIAL%2BEUROCOPA%2BPORTUGAL%2B2004..png);
+    background-repeat:round;
+    animation: rebota 2s ease-in;
+    /* animation-direction: alternate; */
+    animation-iteration-count: infinite;
+    position: absolute;
+    top: 405px;
+    left: 470px;
+    z-index: 2;
+    transform: rotate(82deg)
+}
+
+
+
+@keyframes rebota {
+    0% { transform: translate3d(0, 0, 0); } /*inicio*/
+    12.5% {transform: translate3d(25px, -100px, 0) scale(1.5);}
+    25% {transform: translate3d(50px, -200px, 0) scale(1.5);}
+    50% {transform: translate3d(100px, 0, 0); scale: 3;}
+    75% {transform: translate3d(200px, -200px, 0);} /* canasta*/
+    100% {transform: translate3d(190px, 100px, 0);}  /* toca suelo después de canasta */
+}
+
+@keyframes chilena {
+    0% {transform: rotate(15deg);}
+    
+}
+
+
