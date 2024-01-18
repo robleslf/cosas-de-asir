@@ -1,0 +1,116 @@
+body {
+    display: flex;
+    justify-content: left;
+    background-image: url(https://ssb.wiki.gallery/images/thumb/7/73/SSBU-Pok%C3%A9mon_Stadium_2.png/1200px-SSBU-Pok%C3%A9mon_Stadium_2.png);
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.ash_ketchup {
+    position: absolute;
+    top: 400px;
+    left: 300px;
+    width: 100%;
+}
+
+.mewtwo {
+    position: absolute;
+    top: 500px;
+    left: 600px;
+    width: 100%;
+    animation: tapona 5s ease-in;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+}
+
+.canasta {
+    position: absolute;
+    top: 200px;
+    left: 950px;
+}
+
+.ball {
+    width: 30px;
+    height: 30px;
+    background-image: url(Pokebola-pokeball-png-0.png);
+    background-repeat:round;
+    border-radius: 50%;
+    animation: rebota 5s ease-in;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    position: absolute;
+    top: 405px;
+    left: 470px;
+    z-index: 2;
+    transform: rotate(35deg)
+}
+
+
+
+@keyframes rebota{
+    0% {transform: translate3d(0,0,0);}
+    3.3% {transform: translate3d(100px,-100px,0);}
+    6.6% {transform: translate3d(120px,-120px,0); scale: 0.9;}
+    9.9% {transform: translate3d(130px,-125,0); scale: 0.8;}
+    13.2% {transform: translate3d(140px,-130px,0); scale: 0.7;}
+    16.5% {transform: translate3d(150px,-135px,0); scale: 0.6;}
+    19.8% {transform: translate3d(160px,-140px,0); scale: 0.5;}
+    23.1% {transform: translate3d(170px,-145,0); scale: 0.4;}
+    26.4% {transform: translate3d(180px,-150px,0); scale: 0.3;}
+    29.7% {transform: translate3d(190px,-155,0); scale: 0.2;}
+    33% {transform: translate3d(200px,-160px,0); scale: 0.1;}
+    36.3% {transform: translate3d(210px,-165px,0); scale: 0.9;}
+    39.6% {transform: translate3d(220px,-170px,0); scale: 0.9;}
+    42.9% {transform: translate3d(230px,-175px,0); scale: 0.9;}
+    46.2% {transform: translate3d(240px,-180px,0); scale: 0.9;}
+    49.5% {transform: translate3d(250px,-185px,0); scale: 0.9;}
+    52.8% {transform: translate3d(260px,-190px,0); scale: 0.9;}
+    56.1% {transform: translate3d(270px,-195px,0); scale: 0.9;}
+    59.4% {transform: translate3d(280px,-200px,0); scale: 0.9;}
+    62.7% {transform: translate3d(290px,-205px,0); scale: 0.9;}
+    66% {transform: translate3d(300px,-205px,0); scale: 0.9;}
+    69.3% {transform: translate3d(310px,-205px,0); scale: 0.9;}
+    72.6% {transform: translate3d(320px,-200px,0); scale: 0.9;}
+    75.9% {transform: translate3d(330px,-195px,0); scale: 0.9;}
+    79.2% {transform: translate3d(340px,-190,0); scale: 0.9;}
+    82.5% {transform: translate3d(350px,-185px,0); scale: 0.9;}
+    85.8% {transform: translate3d(360px,-180px,0); scale: 0.9;}
+    89.1% {transform: translate3d(370px,-170px,0); scale: 0.9;}
+    92.4% {transform: translate3d(380px,-165px,0); scale: 0.9;}
+    95.7% {transform: translate3d(390px,-160px,0); scale: 0.9;}
+    100% {transform: translate3d(400px,-155px,0); scale: 0.9;}
+}
+
+@keyframes tapona{
+    0% {transform: translate3d(0,0,0);}
+    3.3% {transform: translate3d(0,-100px,0);}
+    6.6% {transform: translate3d(0,-120px,0);}
+    9.9% {transform: translate3d(0,-125,0);}
+    13.2% {transform: translate3d(0,-130px,0);}
+    16.5% {transform: translate3d(0,-135px,0);}
+    19.8% {transform: translate3d(0,-140px,0);}
+    23.1% {transform: translate3d(0,-145,0);}
+    26.4% {transform: translate3d(0,-150px,0);}
+    29.7% {transform: translate3d(0,-155,0);}
+    33% {transform: translate3d(0,-160px,0);}
+    36.3% {transform: translate3d(0,-165px,0);}
+    39.6% {transform: translate3d(0,-170px,0);}
+    42.9% {transform: translate3d(0,-175px,0);}
+    46.2% {transform: translate3d(0,-180px,0);}
+    49.5% {transform: translate3d(0,-185px,0);}
+    52.8% {transform: translate3d(0,-190px,0);}
+    56.1% {transform: translate3d(0,-195px,0);}
+    59.4% {transform: translate3d(0,-200px,0);}
+    62.7% {transform: translate3d(0,-205px,0);}
+    66% {transform: translate3d(0,-205px,0);}
+    69.3% {transform: translate3d(0,-205px,0);}
+    72.6% {transform: translate3d(0,-200px,0);}
+    75.9% {transform: translate3d(0,-195px,0);}
+    79.2% {transform: translate3d(0,-190,0);}
+    82.5% {transform: translate3d(0,-185px,0);}
+    85.8% {transform: translate3d(0,-180px,0);}
+    89.1% {transform: translate3d(0,-170px,0);}
+    92.4% {transform: translate3d(0,-165px,0);}
+    95.7% {transform: translate3d(0,-160px,0);}
+    100% {transform: translate3d(0,-155px,0);}
+}
