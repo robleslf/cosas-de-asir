@@ -1,0 +1,652 @@
+= Segundo Trimestre
+
+== stat fichero.txt
+
+El estado que nos da sobre un fichero, tamaño, bloques, fichero ordinario o lo que sea, acceso, permisos, identificación del propietario, información de este, cuándo se hizo el último acceso, cuándo se modifico, cuándo hubo un cambio, cuándo se creó. Nos da toda la información del fichero.
+
+=== stat *
+
+Toda la información de todo lo que hay en el directorio actual.
+
+==== stat * | less
+
+Mejor paginarlo.
+
+___
+
+== date
+
+Si yo tengo que crear un fichero en cuyo nombre está la fecha del día podría hacerlo a mano, pero, ¿y si lo tengo automatizado? Necesito que lo haga de forma automática, con la hora del sistema. El date se utiliza mucho, sobre todo en las copias de seguridad.
+
+=== touch copia`date`.txt
+
+Así solo me pone las tres primeras letras del día de la semana, que no es lo que buscamos.
+
+=== date +
+El más informa de que viene un formato, que es un porcentaje y una letra. Según la letra le estaremos diciendo un formato.
+
+=== date +%a
+Día de la semana, las tres letras primeras.
+
+=== date +%A
+Día de la semana, todas las letras.
+
+=== date +%b
+Mes, tres primeras letras.
+
+=== date +%B
+Mes, todas las letras.
+
+=== date +%c
+La hora, pero no me da la zona UTF.
+
+=== date +%d
+El día de hoy, en dos caracteres numéricos.
+
+=== date +%D
+La fecha en dd/mm/aaa.
+
+=== date +%F
+La fecha en aaaa/mm/dd.
+
+[NOTE]
+Conviene trabajar con números, y no pedir los meses en letra, porque a la hora de ordenar, no s pondría abril antes que enero.
+
+=== date +%g
+El año en dos caracteres.
+
+=== date +%G
+El año en 4 caracteres.
+
+
+=== date +%T
+La hora. _T_ de _Time_.
+
+=== date +%w
+El día de la semana en número. Empieza en 0, Domingo, y le sigue el Lunes 1, Martes 2...
+
+=== date +%W
+El número de semana del año.
+
+=== date +Año:%G-Hora:%T
+Esto ya es lo interesante, mezclamos texto, que va sin más, con formato, que es el % y la letra.
+
+=== touch fich1_`date +%F`.txt
+Este es el ejemplo de cómo crear un fichero que lleve la fecha.
+
+[NOTE]
+Para ver más formatos del date, hacerle un _man_ o un _info_.
+
+=== date +%m
+El mes en número.
+
+=== date +%M
+Buscar, no se qué es.
+
+___
+
+== echo
+
+Hasta ahora vimos este comando para mandar texto por pantalla. 
+
+=== echo -e "\nAquí va un salto de línea y \tojo que aquí va una tabulación."
+El -e es para explicarle que va un escape (\). Hay que meterlo entre comillas cuando metamos escapes, igual que cuando ponemos asteriscos.
+
+[NOTE]
+Ante la duda en el examen, ponerlo entre comillas, no van a sobrar.
+
+echo {1..10}
+Emitir por pantalla agrupaciones, en este caso, del 1 al 10
+
+=== echo {1..10}-
+Un guión de separación entre ellos
+
+=== echo -{1..10}-
+Un guión delante y otro detrás.
+
+=== echo {a..f}
+Letras de la _a_ a la _f_.
+
+=== echo {a..z}
+=== echo {A..Z}
+Rango de letras tanto en minúsculas como en mayúsculas.
+
+=== echo {{A..Z},{a..z}}
+Agrupamos primero mayúsculas y después minúsculas.
+
+=== echo {{A..Z}{a..z}}
+Sin la coma lo que hace son combinaciones.
+
+=== echo 1.{0..9}
+1.0, 1.1, 1.2...
+
+=== echo {1..20..2}
+El tercer parámetro es el *salto*, va a ir de dos en dos sacando los números impares.
+
+=== echo {10..1..2}
+Los números pares en reversa.
+
+___
+
+== cat fichero.informe >fich1 2>errores.txt
+El primero guarda lo que no tiene errores y el segundo los errores.
+
+=== cat fichero.informe &>fich1
+Ahora ambas irán al mismo fich1. _&_ Une las dos salidas. Depende de la distribución de Linux así que hay que comprobarlo. En Ubuntu va así.
+
+=== (pwd; date; echo $USER) > solucion.txt
+Varias salidas en un solo fichero.
+
+=== pwd >> solucion.txt; date >> solucion.txt; echo $USER >> solucion.txt
+Es lo mismo de arriba pero peor ejecutado, en este caso el primero lo crea y luego los otros dos se añaden. Pero mejor el anterior.
+
+___
+
+== Editores
+
+El que podemos utilizar ya es el nano, que sale de otro llamado pico.
+
+== nano fichero
+Se maneja todo con ctrl. 
+
+=== ctrl+o
+Guardar.
+
+=== ctrl+x
+Salir.
+
+___
+
+== sort <<END
+Hasta que no le diga la palabra _END_ me va a dejar escribir datos.
+Tú le metes una serie de datos, cuando acabes le dices _END_ y te lo ordena alfabéticamente.
+
+
+== sort -M <<END
+Le estás diciendo que ordene meses, y cuando metas los meses no los ordenará en orden alfabético, sino por enero, febrero...
+
+== sort -M <<END > meses.txt
+Como lo anterior era solo visual, es necesario guardarlo si queremos que no se pierda.
+
+
+___
+
+== cmp colores.txt color.txt
+Comparar dos ficheros. Si no nos da nada es que son idénticos.
+Va comparando la línea del primero con la línea del segundo. Así que es importante el orden que le pongamos.
+Cuando encuentra el primer error, deja de leer. 
+
+No tiene parámetros el cmp.
+
+== comm colores.txt color.txt
+Es otro comparador, pero de otra manera.
+Todo lo que es igual lo pone en una columna, y lo diferente en otra.
+También hay que prestar atención al orden.
+Hace la comparación línea por línea.
+
+== comm -1 color.txt colores.txt
+Que muestre solo lo que tienen en común.
+
+== comm -2 color.txt colores.txt
+En este caso muestra lo que tienen en común, pero teniendo en cuenta como base uno de los dos, ignorando el segundo.
+Buscar mejor la diferencia entre el -1 y el -2.
+
+== comm -3 colores.txt color.txt
+Este nos da la diferencia entre ambos. Aquí da un poco el orden que pongamos, solo va a cambiar que en un orden muestra la diferencia en una columna y en el otro orden en la otra columna.
+Habrá diferencias entre _AZUL_ y _azul_, por ejemplo.
+Este comando no tiene posibilidad para ignorar mayúscular y minúsculas.
+
+== diff -i colores.txt color.txt
+Este sí que ignora mayúscula y minúsculas, lo hace el parámetro *-i*.
+
+=== diff3 -i colores.txt color.txt colorines.txt
+El diff3 permite comparar tres ficheros, además de poder ignorar con el *-i* las mayúsculas y minúsculas.
+
+
+[NOTE]
+El más utlizado suele ser el comm -3, y sino pues el diff -i, para casos más especiales.
+
+___
+
+== last
+Al final podemos ver el fichario binario /var/log/wtmp. Si intentamos hacerle un *less* al fihcero nos dará error porque es binario.
+Pero con el comando last...
+
+=== sudo lastb
+Para el lastb vamos a necesitar el sudo. Nos dice quién se conectó, cuando se conectó, con qué IP... y la información la está sacando de ese fichero. (El *who* y otros también tiran de este fichero).
+
+___
+
+Luego hay otro fichero que es el /var/log/btmp que es más complejo de leer.
+___
+
+== info lastb
+Es útil ver qué otras cosas puede hacer el lastb.
+
+___
+
+== sudo
+En debian no existe, porque se supone que en un servidor no pueden acceder usuarios. 
+
+Cuando un administrador necesita autentificarse, usa el sudo (SuperUser DO), para hacer algo en nombre del superusuario.
+
+Para hacer sudo es necesario estar en una serie de ficheros que solo puede tocar un superusuario o un administrador, así como pertenecer a unos grupos de administración.
+
+== su
+Este es para trabajar con otro usuario pero normal; sería *su nombredecuenta*.
+Es como abrir un sesión en nombre de otra persona (aunque sean ambas nuestras).
+Podríamos también hacer un *su root* pero mejor no porque es poner en peligro el sistema, te hackean sin darte cuenta. Mejor usar el sudo para eso, porque usas el comando como superusuario y pista, con el su habría que cerrar luego sesión porque queda abierta, la puedes preparar.
+
+___
+Inicio y apagado del sistema → ver el pdf del aula virtual
+
+En el runlevel tenemos 7 niveles que van del 0 al 6.
+
+El reboot se hace en una terminal, nunca en un servidor.
+___
+
+
+
+== last -3 reboot
+Últimos 3 reboot hechos
+
+=== last asir1
+Última vez que un usuario se conectó.
+
+
+== uptime
+Tiempo de actividad del sistema. Normalmente se usa para ver cuánto lleva activo el servidor.
+
+
+___
+Empaquetar y comprimir ficheros → ver pdf del aula virtual.
+
+En el tar, la única posición obligatoria es que la *f* vaya antes del nombre del fihcero.
+
+Para saber si un fichero está empaquetado se puede usar el *file*.
+
+el -9 en gzip es la compresión máxima, va por niveles.
+___
+
+
+Copias de seguridad → Ver pdf del aula virtual
+___
+
+== du
+Utilización de disco. Si no le digo de qué, será de todo el contenido de mi directorio de trabajo. Es lo que está ocupando cada cosa.
+
+=== du -h
+COn el -h vemos con claridad que son Ks.
+
+=== du -ha
+Que muestre también el contenido de los subdirectorios.
+
+=== du -ha --time
+Con este parámetro (ojo al doble guión, que es por tema de compatibilidad por otros sistemas Unix), ver la fecha de última modificación -o creación si no se modificó-.
+
+=== du -c
+La -c agrega el total. Muy útil cuando me dicen que tengo una cuota de disco de tanto, y así puedo ver cuánto estoy gastando en total.
+
+=== du -d 1
+Depth. Funciona igual que la profundidad en el find, el 1 es el actual, el 2 el actual más un nivel más...
+Lo que sí que no hay es lo de ver solo el nivel 2, que en el find se hacía con el  -mindepth.
+
+=== du -s
+Veo solo el total.
+
+=== du -h copias
+Cuánto me ocupa un directorio en especial.
+
+== df
+Lo que nos está ocupando el disco, en bloques, lo usado, disponible, porcentaje...
+
+=== df -a
+Es un all, nos muestra cosa por cosa, en detalle.
+
+=== df -h
+Lo mejor es con un h a secas y no poner la k y la m que vienen ahora explicadas.
+
+=== df -hk
+De kilo
+
+=== df -hm
+De mega
+
+=== df --total -h
+Muestra el total a mayores.
+
+=== df -t
+Agrega el tipo de sistema de ficheros. Son todos temporales, los crea el sistema, pero luego los crea. Los dos que son sistemas propiamente dichos son el 
+
+=== df -T *.txt
+
+=== df --total -h
+
+== cat /proc/version
+El uname saca información de aquí.
+
+== cat /proc/cpuinfo
+
+== cat /proc/meminfo?
+Páginas de memoria que se están usando...todo lo de la RAM.
+
+
+=== lsb_release -i
+Suelen instalarse, porque el Ubuntu que utilices igual no la trae de entrada.
+
+=== lsb_release -idc
+La *-i* nos está diciendo la distribución de Linux que tenemos, la *-d* completa la distribución más la versión, y la *-c* es el nombre en código, que es _jammy_ en nuestro caso.
+
+== lsusb
+Información sobre los usb.
+
+== lshw | less
+Suele ser largo, de ahí el less. Sale todo el hardware, placa, memoria,...
+Con sudo nos da más información.
+
+=== sudo lshw
+Sería bueno hacerlo con un less también.
+Podemos ver por ejemplo los nombres lógicos de cada dispositivo. A veces un dispositivo usa más de un nombre lógico.
+
+=== lshw -short | less
+Una versión más reducida de todo lo anterior.
+
+
+=== sudo lshw -c video | less
+Quiero ver el específico solo del video.
+
+==== sudo lshw -c network | less
+Si por ejemplo no me funcionase la red, podría ver la información de la red así.
+
+== arch
+Información de la arquitectura. Lo teníamos también con el uname y con variables de entorno.
+
+== free
+Memoria libre.
+
+=== free -m
+
+
+=== free -g
+
+
+== sudo dmesg | less
+Cuando arrancamos el equipo, nos muestra muchas cosas y comandos. Con esto vemos la última carga que hizo.
+
+== sudo fdisk -l
+Nos muestra las particiones.
+
+=== sudo fdisk -l | grep -i sda
+Podemos ver solo lo que nos interesa.
+
+
+___
+
+[NOTE]
+Es indiferente usar *apt* o *apt-get*; el primero es más moderno, pero van a funcionar igual
+
+== sudo apt-get update
+Actualizar los índices.
+
+
+=== sudo apt update
+el apt es más moderno
+
+=== sudo apt upgrade
+Actualizar.
+
+== cat /etc/apt/sources.list
+Es el fichero donde se encuentran los repositorios.
+
+== sudo apt install tree
+Así se instalan cosas.
+
+== sudo apt-get dist-upgrade
+Saltamos de versión, actualizamos al siguiente Ubuntu.
+
+
+* Ver el pdf Cuentas de Usuario del aula virtual
+
+== apt-get autoclean
+
+== dpkg 
+Reparar los índices.
+
+=== dpkg -L
+
+=== dpkg -l
+
+== apt-get help
+
+___
+
+Hay otro instalador que ya no se usa mucho, que es el aptitude. Está intentando desaparecer. 
+
+Hay uno nuevo que es el snap. Este bien.
+
+== sudo apt install at
+
+
+___
+
+== at
+
+Ver el pdf del aula virtual de at.
+los spool son las colas donde se van guardando las cosas. tODO LO QUE ESTÁ EN ETC ES CONFIGURACIÓN.
+
+=== at 3:15pm
+Si ponemos mal la fecha nos avisaría de que está mal; en este caso estaría bien y te diría que los comandos se ejecutarían la próxima 3:15pm
+Sale una línea, esperando; ahora ponemos uno nuevo:
+
+==== date > ~/fecha.315.txt
+aquí ejecutaría el comando date y lo guardaría en el archivo fehca.315.txt en la carpeta home. 
+Llegada la hora, se ejecutaría.
+
+[NOTE]
+Cerramos con control+D
+
+Podemos ejecutar varios comandos dentro de un mismo at, hasta que no le demos a ctrl+d podemos meter lo que queramos.
+
+=== at -l
+muestra el listado de tareas
+
+=== atq
+q de cola, muestra lo mismo que el anterior comando. Es lo mismo.
+
+=== atrm 1
+que remueva la tarea 1
+
+=== sudo at now + 50 minutes
+al poner el sudo, el home va a ser el home del sudo, así que hay que tener cuidado al usarlo.
+
+=== at now + 2 days
+==== date
+==== ctrl+d
+
+=== at 10 am + 1 week
+==== date
+
+[NOTE]
+El orden de las cabeceras (la cabecera del at es el comando, lo demás es el contenido) no se puede cambiar, ha de ser siempre el mismo.
+
+=== at 11pm Jun 15
+mantener el formato y orden: horas, mes, día
+Puede ir el pm/am tanto pegado al número como separado.
+
+=== at 8:38am 15.06.24
+
+=== at -m now + 10 minutes
+el m lo vamos a utilizar cuando queramos, por ejemplo, enviar un mail.
+
+___
+
+== cron
+Con el at hace automáticamente lo que dices pero una vez; con el cron puedes hacerlo todos los domingos del año si quieres, o a las 9:00 am todos los días... Hace una tarea de forma repetitiva.
+
+Su demonio es el cron.d, necesita estar activo para que el cron funcione.
+
+=== crontab -e
+
+Ver el pdf del aula virtual de cron.
+
+[NOTE]
+En el cron sí que se permite el echo, no como en el at
+
+[NOTE]
+Usar siempre rutas absolutas con el cron, porque, por ejemplo, si le dices que tal día a tal hora cree el archivo archivo.txt, como no le pongas la ruta, te lo va a crear donde esté en ese momento
+
+___
+
+Una cosa sobre el cron: 
+
+Cuando haces "crontab -e" abres el fichero de crontab del usuario, pero cuando haces "sudo crontab -e" abres otro archivo, el del superusuario. Son dos archivos diferentes. 
+
+Entonces, cuando quiera poner algún comando que se ejecute y necesite permisos de root, como puede ser "shutdown", no se tiene que hacer "crontab -e" y dentro "sudo shutdown -h now". Porque cuando llegue el momento de ejecutarse el comando, nos pediría la contraseña, y para eso no automatizamos nada.
+
+Lo que hay que hacer es el "sudo crontab -e" y dentro "shutdown -h now".
+
+Y otra cosa, en el archivo crontab del root, hay que poner las rutas absolutas pero del todo, no valdría poner "~/copias.txt", porque eso es el home de usuario pero ahora no somos el usuario. Habría que poner /home/asir/copias.txt
+___ 
+PROCESOS
+
+Tenemos dos tipos de procesos, los que no vemos, que ejecuta el sistema, y luego los nuestros, que los emitimos nosotros desde la terminal.
+
+Para verlos, hay un comando que nos sirve para pruebas, no tiene sentido para otra cosa generalmente:
+
+== sleep 10
+
+El 10 es de 10 segundos, se pone los que quieran. Se duerme 10 segundos.
+
+=== sleep 10 ; date
+Se duerme 10 segundos y luego te hace el date.
+
+=== sleep 10m
+La m es de minutos, se duerme 10 minutos
+
+=== sleep 10m &
+Si no quiero que me bloque la terminal durante 10 minutos, le pido que lo minimize, lo ejecute en segundo plano y me libere la terminal, esto con el &.
+Manda un número, es la numeración en la que entra ese trabajo y un número.
+
+Cuando se hacen, pone un done.
+
+== jobs
+Veo todas las tareas que he mandado por terminal. No son todas las tareas del sistema.
+
+
+=== jobs -r
+tareas nuestras que están en running (ya sea en primer o en segundo plano, pero se están ejecutando).
+
+=== jobs -s
+tareas nuestras que están detenidas.
+
+=== jobs -l
+de listar, el -l nos permite tener también el PID.
+
+=== vi libros.txt
+
+Paso a modo comando con el esc y pulso ^Z; con ello detengo ese trabajo. Ahora si hago el "jobs" me sale la tarea de libros.txt detenida.
+
+== fg %2
+Para traer la tarea número 2. fg de foreground.
+
+== ^Z
+En caso de hacer fg a una tarea que me bloque la terminal, con el ^Z podemos detenerla.
+
+== bg %1
+Así volvemos a ejecutar la tarea, pero ya no en primer plano, sino a segundo plano para que no me bloquee la terminal. bg de background.
+
+=== sleep 15m; date; pwd &
+Ojo con esto porque aquí el & solo afecta al pwd, el bloqueo de terminal de 15 minutos te lo comes, y cuando acaben esos 15 min, te ejecuta el date y el pwd.
+
+=== (sleep 15m; date; pwd) &
+Aquí sí, todos se van a segundo plano.
+
+[NOTE]
+Todas las tareas del jobs son tareas de la terminal, no del entorno gráfico.
+
+== top
+Todos los procesos del sistema.
+Lo hace de forma interactiva a diferencia del jobs, los va actualizando.
+
+Cada proceso tiene su identifiación (PID).
+
+La primera linea es respecto al procesador, cuándo se arranco el sistema, cuánto lleva activo, cuántos usuarios...
+
+La segunda líneas nos dice el número de procesos o tareas, y su estado.
+
+La tercera de la CPU.
+
+La cuarta memoria RAM.
+
+La quinta de la swap.
+
+La sexta nos deja escribir cosas:
+    Con h entramos a la ayuda y vemos qué podemos poner.
+    La k por ejemplo es para hacer kill a algún proceso.
+    Con la u de user y el nombre del user filtras por ese usuario.
+
+Lugo viene la tablita con los procesos; la columna de la S es de estado, nos interesan los que están en stop  (T), luego el R es running...las S suelen ser varios estados diferentes, pueden ser de start...
+
+Utilizamos las teclas de mayor y menor para movernos.
+
+Salimos con q de quit.
+
+[NOTE]
+Con el jobs solo vemos los procesos nuestros, de terminal, y el comando top nos muestra todos.
+
+== ps
+ps a secas solo muestra mis procesos.
+Si haces un jobs y luego un ps verás dos procesos más, uno es el propio ps, y otro es el bash, que es el proceso padre de todo porque es lo que mantiene la terminal.
+
+Por tnemas de compatibilidad, funciona de tres maneras diferentes: para UNIX, para BSD y pra GNU.
+
+=== ps -e
+es una información como la del top pero más resumida, es largo, mejor hacerlo con un "| less"
+
+=== ps-f
+Nos muestra el PPID, que es el PID del proceso padre. Si la dependencia es 0, significa que no tiene padre, son los demonios que arrancan con el ordenador. No deben tocarse.
+
+=== ps -F
+Nos da aún más información a mayores.
+
+=== ps -H
+Nos muestra dependencias de una manera un poco más TRAMBÓLICA. Lo hace tabulando.
+
+=== ps aux
+la a de all, la u de todos los users y la x de ejecucíon. Es uno de los más utilizados, y OJO que va sin guión.
+
+=== ps -u asir
+solo del usuario asir.
+
+=== ps -A
+
+
+=== pstree | less
+Para verlo en formato árbol
+
+
+=== pstree -g
+Añade a lo que estamos viendo anteriormente el número del PID
+este es el que más nos va a servir
+
+=== pstree -t 
+para mostras los hilos. Vale también con pstree -T
+
+=== kill
+Lo vamos a usar para matar procesos
+
+=== kill -15
+esto es que lo elimine cuando pueda, es el que va por defecto si no pones nada
+
+=== kill -9
+que pare ya, esté haciendo lo que esté haciendo
+
+=== kill 9
+sin el símbolo "-" lo que hace es matar el proceso 9, cuando pueda, porque es el -15 por defecto.
+
+=== kill -15 1066
+que cuando pueda te mate el 1066
+
+=== kill -9 %5
+El % indica q es tarea, a diferencia que los procesos que no llevan nada delante.
+Podemos matar de las dos formas, por tarea o por proceso.
