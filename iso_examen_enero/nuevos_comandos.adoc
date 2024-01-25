@@ -557,3 +557,199 @@ Lo que hay que hacer es el "sudo crontab -e" y dentro "shutdown -h now".
 
 Y otra cosa, en el archivo crontab del root, hay que poner las rutas absolutas pero del todo, no valdría poner "~/copias.txt", porque eso es el home de usuario pero ahora no somos el usuario. Habría que poner /home/asir/copias.txt
 ___ 
+
+
+___ 
+PROCESOS
+
+Tenemos dos tipos de procesos, los que no vemos, que ejecuta el sistema, y luego los nuestros, que los emitimos nosotros desde la terminal.
+
+Para verlos, hay un comando que nos sirve para pruebas, no tiene sentido para otra cosa generalmente:
+
+== sleep 10
+
+El 10 es de 10 segundos, se pone los que quieran. Se duerme 10 segundos.
+
+=== sleep 10 ; date
+Se duerme 10 segundos y luego te hace el date.
+
+=== sleep 10m
+La m es de minutos, se duerme 10 minutos
+
+=== sleep 10m &
+Si no quiero que me bloque la terminal durante 10 minutos, le pido que lo minimize, lo ejecute en segundo plano y me libere la terminal, esto con el &.
+Manda un número, es la numeración en la que entra ese trabajo y un número.
+
+Cuando se hacen, pone un done.
+
+== jobs
+Veo todas las tareas que he mandado por terminal. No son todas las tareas del sistema.
+
+
+=== jobs -r
+tareas nuestras que están en running (ya sea en primer o en segundo plano, pero se están ejecutando).
+
+=== jobs -s
+tareas nuestras que están detenidas.
+
+=== jobs -l
+de listar, el -l nos permite tener también el PID.
+
+=== vi libros.txt
+
+Paso a modo comando con el esc y pulso ^Z; con ello detengo ese trabajo. Ahora si hago el "jobs" me sale la tarea de libros.txt detenida.
+
+== fg %2
+Para traer la tarea número 2. fg de foreground.
+
+== ^Z
+En caso de hacer fg a una tarea que me bloque la terminal, con el ^Z podemos detenerla.
+
+== bg %1
+Así volvemos a ejecutar la tarea, pero ya no en primer plano, sino a segundo plano para que no me bloquee la terminal. bg de background.
+
+=== sleep 15m; date; pwd &
+Ojo con esto porque aquí el & solo afecta al pwd, el bloqueo de terminal de 15 minutos te lo comes, y cuando acaben esos 15 min, te ejecuta el date y el pwd.
+
+=== (sleep 15m; date; pwd) &
+Aquí sí, todos se van a segundo plano.
+
+[NOTE]
+Todas las tareas del jobs son tareas de la terminal, no del entorno gráfico.
+
+== top
+Todos los procesos del sistema.
+Lo hace de forma interactiva a diferencia del jobs, los va actualizando.
+
+Cada proceso tiene su identifiación (PID).
+
+La primera linea es respecto al procesador, cuándo se arranco el sistema, cuánto lleva activo, cuántos usuarios...
+
+La segunda líneas nos dice el número de procesos o tareas, y su estado.
+
+La tercera de la CPU.
+
+La cuarta memoria RAM.
+
+La quinta de la swap.
+
+La sexta nos deja escribir cosas:
+    Con h entramos a la ayuda y vemos qué podemos poner.
+    La k por ejemplo es para hacer kill a algún proceso.
+    Con la u de user y el nombre del user filtras por ese usuario.
+
+Lugo viene la tablita con los procesos; la columna de la S es de estado, nos interesan los que están en stop  (T), luego el R es running...las S suelen ser varios estados diferentes, pueden ser de start...
+
+Utilizamos las teclas de mayor y menor para movernos.
+
+Salimos con q de quit.
+
+=== top -u asir
+
+[NOTE]
+Con el jobs solo vemos los procesos nuestros, de terminal, y el comando top nos muestra todos.
+
+== ps
+ps a secas solo muestra mis procesos.
+Si haces un jobs y luego un ps verás dos procesos más, uno es el propio ps, y otro es el bash, que es el proceso padre de todo porque es lo que mantiene la terminal.
+
+Por tnemas de compatibilidad, funciona de tres maneras diferentes: para UNIX, para BSD y pra GNU.
+
+=== ps -e
+es una información como la del top pero más resumida, es largo, mejor hacerlo con un "| less"
+
+=== ps-f
+Nos muestra el PPID, que es el PID del proceso padre. Si la dependencia es 0, significa que no tiene padre, son los demonios que arrancan con el ordenador. No deben tocarse.
+
+=== ps -F
+Nos da aún más información a mayores.
+
+=== ps -H
+Nos muestra dependencias de una manera un poco más TRAMBÓLICA. Lo hace tabulando.
+
+=== ps aux
+la a de all, la u de todos los users y la x de ejecucíon. Es uno de los más utilizados, y OJO que va sin guión.
+
+=== ps -u asir
+solo del usuario asir.
+
+=== ps -A
+
+
+=== pstree | less
+Para verlo en formato árbol
+
+
+=== pstree -g
+Añade a lo que estamos viendo anteriormente el número del PID
+este es el que más nos va a servir
+
+=== pstree -t 
+para mostras los hilos. Vale también con pstree -T
+
+=== kill
+Lo vamos a usar para matar procesos
+
+=== kill -15
+esto es que lo elimine cuando pueda, es el que va por defecto si no pones nada
+
+=== kill -9
+que pare ya, esté haciendo lo que esté haciendo
+
+=== kill 9
+sin el símbolo "-" lo que hace es matar el proceso 9, cuando pueda, porque es el -15 por defecto.
+
+=== kill -15 1066
+que cuando pueda te mate el 1066
+
+=== kill -9 %5
+El % indica q es tarea, a diferencia que los procesos que no llevan nada delante.
+Podemos matar de las dos formas, por tarea o por proceso.
+
+=== kill -l
+___
+
+Cuando hacemos top nos muestra arriba las prioridades (PR). Algunos tienen más prioridad que otros. La mayoría va a tener un valor 0, eso es prioridad media. Luego hay otras en negativo y otras en positivo. Lo de positivo es de menor prioridad. Lo que está en negativo es alta prioridad. La prioridad mínima es 19; es decir:
+
+Va desde 19 hasta -20.
+
+La mayoría está en el 0.Como usuarios estamos limitados hasta el 0; el root, no obstante, puede aumentar hasta el -20.
+
+Ese es el valor por defecto, la del PR; luego el NICE (NI) es el valor que se le ha modificado, e indica lo mismo, prioridad. Con modificados sí que puede haber un -51, por ejemplo.
+
+___
+
+== yes
+Su uso es similar al sleep. Lo detienes con el ^Z.
+
+___
+
+== nice
+a secas, el nice nos dice la prioridad que tengo yo en los procesos, para todos los trabajos.
+
+=== nice -n -10 sleep 20m
+Al hacerlo sin sudo, como estás metiendo una prioridad negativa, no te dejará.
+
+=== nice -n 10 sleep 20m
+la primera parte es el cambio de prioridad que vamos a meterle al comando que ejecutamos en la segunda parte.
+Ahora si hacemos un top -u asir veremos que la prioridad del sleep está en 10.
+
+
+___
+
+El nice lo utilizo cuando quiero lanzar un comando con otra prioridad, es futuro, lo voy a lanzar, no lo tengo lanzado.
+
+___
+
+== renice
+Este es para aquellos procesos que ya están ejecutándose y les quiero cambiar la prioridad, es presente.
+
+=== renice -n 0 -p 1069
+con el -p le informo que es un proceso y acontinuación meto su PID
+
+=== kill -9 1000
+
+==== kill -l
+miramos el 9, vemos que se llama SIGKILL
+==== kill -SIGKILL 1000
+y es lo mismo que el kill -9 10000
