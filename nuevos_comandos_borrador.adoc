@@ -591,6 +591,8 @@ Utilizamos las teclas de mayor y menor para movernos.
 
 Salimos con q de quit.
 
+=== top -u asir
+
 [NOTE]
 Con el jobs solo vemos los procesos nuestros, de terminal, y el comando top nos muestra todos.
 
@@ -650,3 +652,54 @@ que cuando pueda te mate el 1066
 === kill -9 %5
 El % indica q es tarea, a diferencia que los procesos que no llevan nada delante.
 Podemos matar de las dos formas, por tarea o por proceso.
+
+=== kill -l
+___
+
+Cuando hacemos top nos muestra arriba las prioridades (PR). Algunos tienen más prioridad que otros. La mayoría va a tener un valor 0, eso es prioridad media. Luego hay otras en negativo y otras en positivo. Lo de positivo es de menor prioridad. Lo que está en negativo es alta prioridad. La prioridad mínima es 19; es decir:
+
+Va desde 19 hasta -20.
+
+La mayoría está en el 0.Como usuarios estamos limitados hasta el 0; el root, no obstante, puede aumentar hasta el -20.
+
+Ese es el valor por defecto, la del PR; luego el NICE (NI) es el valor que se le ha modificado, e indica lo mismo, prioridad. Con modificados sí que puede haber un -51, por ejemplo.
+
+___
+
+== yes
+Su uso es similar al sleep. Lo detienes con el ^Z.
+
+___
+
+== nice
+a secas, el nice nos dice la prioridad que tengo yo en los procesos, para todos los trabajos.
+
+=== nice -n -10 sleep 20m
+Al hacerlo sin sudo, como estás metiendo una prioridad negativa, no te dejará.
+
+=== nice -n 10 sleep 20m
+la primera parte es el cambio de prioridad que vamos a meterle al comando que ejecutamos en la segunda parte.
+Ahora si hacemos un top -u asir veremos que la prioridad del sleep está en 10.
+
+
+___
+
+El nice lo utilizo cuando quiero lanzar un comando con otra prioridad, es futuro, lo voy a lanzar, no lo tengo lanzado.
+
+___
+
+== renice
+Este es para aquellos procesos que ya están ejecutándose y les quiero cambiar la prioridad, es presente.
+
+=== renice -n 0 -p 1069
+con el -p le informo que es un proceso y acontinuación meto su PID
+
+=== kill -9 1000
+
+==== kill -l
+miramos el 9, vemos que se llama SIGKILL
+==== kill -SIGKILL 1000
+y es lo mismo que el kill -9 10000
+
+
+

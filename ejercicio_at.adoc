@@ -1,0 +1,82 @@
+Ejercicio tareas programadas con at
+1. Lanzar un at, que te felicite el día de tu cumpleaños, a través de un e-mail
+
+* at -m NOV 04
+* nano felicidades.txt
+* mail asir < felicidades.txt
+
+2. Crear un at, que envíe, dentro de 3 días a esta misma hora, un fichero al profesor, el cual contenga el siguiente mensaje: i. Tarea cumplida, usuarioxx
+
+// esto lo había hecho yo
+// * at -m now + 3 days
+// * touch fichero.txt
+// * echo "Tarea cumplida, usuarioxx" > ~/fichero.txt
+// * mail profesor < ~/fichero.txt
+
+// luego explicó Rosa cómo se hace:
+* nano tarea.txt
+* Escribes dentro "tarea cumplida"
+* ctrl+o
+* ctrl+x
+* at -m now + 3 days
+* mail profe < ~/tarea.txt
+* ctrl + d
+
+
+
+3. Lanzar un at, que envíe un mensaje a un usuario, que se active antes de 24 hs.
+
+* nano cafe.txt
+* "Es la hora del café"
+* ctrl+o, ctrl+x
+* at -m now + 23 hours
+* mail usuario < cafe.txt
+* ctrl+d
+
+4. Crear el fichero ~/conectados.1 con los 5 últimos usuarios conectados, seguido del nombre de login, el nombre de su host y todos sus datos de usuario. Al finalizar enviar, un e-mail, que le informe que el fichero contectados.1 ha sido creado.
+
+* at -m now
+* last -5 > ~/conectados.1
+* logname >> ~/conectados.1
+* hostname >> ~/conectados.1
+* id -a >> ~/conectados.1
+* mail usuario < ~/conectados.1
+
+5. Listar todos los ficheros at y guardarlos en ~/fichAT.txt
+
+* at -l > ~/fichAT.txt
+
+6. Lanzar un at, que apague el sistema, al finalizar esta clase enviando un mensaje de apagada del sistema.
+
+* sudo at 11:35
+* shutdown -h now "Se apaga esto a las 11:35"
+* ctrl+d
+
+7. Lanzar un at, que el próximo martes a las 16:45, elimine todos los ficheros de tamaño 0, de vuestro HOME de usuario, posteriormente envíe un mensaje al usuario, por la tarea finalizada.
+
+* at -m 16:45 tuesday
+* find ~ -empty -exec rm {} \; 2>/dev/null
+* ctrl+d
+
+8. Programar una copia de seguridad de nuestro home con destino /tmp para el viernes a
+medianoche
+
+* at midnight friday
+* tar -cvf ~/Total_home.tar ~
+* ctrl+d
+
+9. Listar todas las tareas programadas.
+
+* at -l
+
+10. Eliminar la tarea del punto 3.
+
+* at -r 3
+
+11. Crear el fichero ~/modificadores.txt con los modificadores permitidos para el comando at.
+
+* cat /usr/share/doc/at/timespec > ~/modificadores.txt
+
+12. Visualizar en el fichero correspondiente si mi cuenta está denegada para realizar tareas programadas.
+
+* sudo grep asir /etc/at.deny
